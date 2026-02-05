@@ -14,7 +14,7 @@ test.describe('TodoMVC Functional Suite', () => {
 
         const customBrowser = await chromium.launch({
         slowMo: 500,
-        headless: false 
+        headless: true
     });
        // 2. Create the page from this custom browser
     page = await customBrowser.newPage();
