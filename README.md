@@ -1,20 +1,31 @@
-# TodoMVC Test Project
+A modern, scalable E2E testing framework for the [TodoMVC](https://todomvc.com/) application. This project demonstrates advanced **Page Object Model (POM)** patterns and the use of **semantic locators** for resilient automation.
 
-This project uses **Playwright** to test the TodoMVC website. 
+## 🚀 Key Features
+- **Page Object Model (POM):** Clean separation between test logic and UI locators.
+- **Resilient Locators:** Specialized use of `getByTestId` and `getByRole` to mimic user behavior and ensure stability.
+- **Dynamic Assertions:** Leveraging Playwright's auto-awaiting assertions (`expect`).
+- **Data-Driven:** Support for bulk todo creation and state-based validation.
 
-## How to setup
-1. **Clone the project:**
-   git clone https://github.com/blessybabu-qa/TodoMVC_Playwright.git
+## 🛠️ Tech Stack
+- **Engine:** [Playwright](https://playwright.dev/)
+- **Language:** JavaScript (ES6+)
+- **Test Runner:** Playwright Test
 
-2. **Install everything:**
-   npm install
-   npx playwright install
+## 📂 Project Structure
+- **pages/** - Robust Page Objects using semantic locators.
+- **tests/** - Clean, readable E2E test scenarios.
+- **playwright.config.js** - Framework configuration.
 
-## How to run the tests
-To see the browser and run the tests slowly, use this command:
+## 🧪 Included Scenarios
+1. **Creation:** Adding single and multiple todos.
+2. **Filtering:** Verifying "Active", "Completed", and "All" views.
+3. **Management:** Completing tasks and clearing the completed list.
+4. **Validation:** UI state sync with internal data tracking.
 
-npx playwright test --project=chromium --headed --workers=1 
+## 🏁 Quick Start
+1. Clone the repo: `git clone https://github.com/blessybabu-qa/TodoMVC_Playwright.git`
+2. Install dependencies: `npm install`
+3. Run tests: `npx playwright test`
 
-## Project Folders
-* **pages/** - This folder has the code for finding buttons and typing text and verifying.
-* **tests/** - This folder has the actual test steps.
+---
+*Created with ❤️ by Blessy Babu — Passionate about high-quality automation.*
