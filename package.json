@@ -1,7 +1,7 @@
 {
   "name": "todomvc_playwright",
   "version": "1.0.0",
-  "description": "",
+  "description": "A modern, scalable E2E testing framework for the [TodoMVC](https://todomvc.com/) application. This project demonstrates advanced **Page Object Model (POM)** patterns and the use of **semantic locators** for resilient automation.",
   "main": "index.js",
   "scripts": {},
   "keywords": [],
@@ -9,7 +9,19 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
     "@playwright/test": "^1.58.0",
     "@types/node": "^25.1.0"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blessybabu-qa/TodoMVC_Playwright.git"
+  },
+  "bugs": {
+    "url": "https://github.com/blessybabu-qa/TodoMVC_Playwright/issues"
+  },
+  "homepage": "https://github.com/blessybabu-qa/TodoMVC_Playwright#readme"
 }

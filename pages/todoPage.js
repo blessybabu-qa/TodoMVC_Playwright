@@ -11,7 +11,7 @@ export class todoPage {
         this.checkBox = page.getByTestId('todo-item-toggle');
         this.completedCheckBox = page.locator('li.completed');
 
-        // FIX: Change '.todo-list' (the container) to '.todo-list li' (the items)
+        
         this.todoItems = page.locator('.todo-list li');
         this.addedTodos = [];
     }

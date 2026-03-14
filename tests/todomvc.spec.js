@@ -1,61 +1,70 @@
-import { test, expect,chromium } from '@playwright/test'
-import { todoPage } from '../pages/todoPage'
+import { test, expect } from '@playwright/test';
+import { todoPage } from '../pages/todoPage';
+import { faker } from '@faker-js/faker';
 
 test.describe('TodoMVC Functional Suite', () => {
-    let todo
-    let page
-    const myTasks = ['Task 1', 'Task 2', 'Task 3', 'Task 4'];
-    let completedTaskName
-
-    // Use serial mode because each test builds on the previous one
-     test.describe.configure({ mode: 'serial' })
-
-    test.beforeAll(async ({ browser }) => {
-
-        const customBrowser = await chromium.launch({
-        slowMo: 500,
-        headless: true
-    });
-       // 2. Create the page from this custom browser
-    page = await customBrowser.newPage();
-    todo = new todoPage(page);
-
-        // 1. Go to URL
-        await todo.gotoTodoMvcUrl()
-        // 2. Click React option (per your method logic)
-        await todo.clickReactOption()
+    
+    test.beforeEach(async ({ page }) => {
+        const todo = new todoPage(page);
+        // Common setup for every test
+        await todo.gotoTodoMvcUrl();
+        await todo.clickReactOption();
     });
 
-    test('Step 1: Add multiple todos and verify', async () => {
-        await todo.clickInputOption()
-        await todo.addMultipleTodos(myTasks)
+    test('should allow a user to add multiple todo items', async ({ page }) => {
+        const todo = new todoPage(page);
+        const myTasks = [faker.commerce.productName(), faker.commerce.productName()];
 
-        // Verify all 4 are visible
-        await todo.verifyTodosAreVisible()
+        await todo.clickInputOption();
+        await todo.addMultipleTodos(myTasks);
+        await todo.verifyTodosAreVisible();
     });
 
-    test('Step 2: Complete a random todo and verify in Completed filter', async () => {
-        // Capture the name of the one we check
-        completedTaskName = await todo.checkRandomAndReturnName()
-        await todo.clickCompletedOption()
+    test('should display completed tasks in the completed filter', async ({ page }) => {
+        const todo = new todoPage(page);
+        const myTasks = [faker.commerce.productName()];
 
-        // Verify the specific item moved to Completed
-        await todo.verifyCompletedNameVisible(completedTaskName)
+        // Arrange: Prepare state for THIS test specifically
+        await todo.addMultipleTodos(myTasks);
+        
+        // Act
+        const completedTaskName = await todo.checkRandomAndReturnName();
+        await todo.clickCompletedOption();
+
+        // Assert
+        await todo.verifyCompletedNameVisible(completedTaskName);
     });
 
-    test('Step 3: Clear completed and verify deletion', async () => {
-        // We are already on the Completed tab from the previous test
-        await todo.clickClearCompleted()
+    test('should clear completed items from the list', async ({ page }) => {
+        const todo = new todoPage(page);
+        const myTasks = [faker.commerce.productName()];
 
-        // Verify the completed list is now empty
-        await todo.verifyCompletedDeleted()
+        // Arrange
+        await todo.addMultipleTodos(myTasks);
+        await todo.checkRandomAndReturnName(); // Mark one as done
+        await todo.clickCompletedOption();
+
+        // Act
+        await todo.clickClearCompleted();
+
+        // Assert
+        await todo.verifyCompletedDeleted();
     });
 
-    test('Step 4: Click All and verify remaining active items', async () => {
-        await todo.clickAllOption()
+    test('should reflect the correct remaining count after deletion', async ({ page }) => {
+        const todo = new todoPage(page);
+        const myTasks = [faker.commerce.productName(), faker.commerce.productName()];
 
-        // Verify that 3 items remain (since we cleared 1)
-        const remainingCount = myTasks.length - 1
-        await todo.verifyRemainingCount(remainingCount)
+        // Arrange
+        await todo.addMultipleTodos(myTasks);
+        await todo.checkRandomAndReturnName(); // Complete 1 of 2
+        
+        // Act
+        await todo.clickCompletedOption();
+        await todo.clickClearCompleted();
+        await todo.clickAllOption();
+
+        // Assert: 2 tasks minus 1 cleared = 1 remaining
+        await todo.verifyRemainingCount(1);
     });
 });
