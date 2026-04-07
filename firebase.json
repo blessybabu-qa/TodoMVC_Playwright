@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "allure-report",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

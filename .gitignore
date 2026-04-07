@@ -10,3 +10,8 @@ node_modules/
 # Allure results and reports
 allure-results/
 allure-report/
+
+# Firebase cache and logs
+.firebase/
+firebase-debug.log
+firebaserc-debug.log
